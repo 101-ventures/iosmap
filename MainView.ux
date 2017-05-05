@@ -1,0 +1,5 @@
+<App>
+    <NativeViewHost>
+    <MapView/>
+</NativeViewHost>
+</App>
