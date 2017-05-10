@@ -1,5 +1,7 @@
 <App>
     <NativeViewHost>
-    <MapView/>
+    <MapView Latitude="59.911567" Longitude="10.741030" Zoom="10">
+        <MapMarker Latitude="59.911567" Longitude="10.741030" Label="Lett Oslo" />
+    </MapView>
 </NativeViewHost>
 </App>

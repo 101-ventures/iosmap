@@ -1,0 +1,7 @@
+<MapView ux:Class="LettMap" Layer="Overlay"  ShowMyLocationButton="true" ShowMyLocation="true" Latitude="59.910617" Longitude="10.728045" Zoom="12">
+  <MapMarker Latitude="59.913580" Longitude="10.731637" Label="Klingenberggata 7"/>
+  <MapMarker Latitude="59.920814" Longitude="10.683548" Label="Sjølyst / Karenlyst Allé 9"/>
+  <MapMarker Latitude="59.912191" Longitude="10.742993" Label="Steen og Strøm Magasin"/>
+  <MapMarker Latitude="59.910617" Longitude="10.728045" Label="Aker Brygge / Grundingen 1"/>
+  <MapMarker Latitude="59.916261" Longitude="10.714986" Label="Frognerveien 8"/>
+</MapView>
