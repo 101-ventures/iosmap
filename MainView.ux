@@ -1,56 +1,45 @@
 <App>
+
 <JavaScript>
-  var Observable = require("FuseJS/Observable");
-var contact = Observable("");
-var contactInfo = Observable(
-  {latitude:59.913580, longitude:10.731637, label:"Klingenberggata 7 \n tlf: 941 42 924\n epost: Klingenberg@lettoslo.no" },
-  {latitude:59.920814, longitude:10.683548, label:"Sjølyst / Karenlyst Allé 9 \n tlf: 941 48 469"},
-  {latitude:59.912191 , longitude:10.742993, label:"Steen og Strøm Magasin \n tlf: 941 48 469\n epost: Steenogstrom@lettoslo.no"},
-  {latitude:59.910617, longitude:10.728045, label:"Aker Brygge / Grundingen 1 \n tlf: 459 70 500\n epost: akerbrygge@lettoslo.no" },
-  {latitude:59.916261, longitude:10.714986, label:"Frognerveien 8 \n tlf: 909 41 565\n epost: Frogner@lettoslo.no"});
+    module.exports = {
+        onPageLoaded : function(res) {
+            console.log("WebView arrived at "+ JSON.parse(res.json).url);
+    }
+};
+    </JavaScript>
 
-  var label = Observable("");
+    <WhileTrue ux:Name="WebViewInView" >
+      <Move Target="WebViewPanel" Y="-1" RelativeTo="ParentSize" Duration=".17" Easing="QuadraticOut"/>
+    </WhileTrue>
 
-updateInfo = function (arg){
-    label.value = arg.label;
-  }
-
-
-function goBack(){
-  router.goBack();
-}
-
-  module.exports = {
-    updateInfo: updateInfo,
-    contactInfo: contactInfo,
-    contact: contact,
-    label: label,
-    goBack: goBack,
-  }
-
-
-</JavaScript>
-
-<Panel ux:Name="menu" Alignment="Top"  Height="65">
-            <Panel Padding="10,20,10,0" >
-                <SolidColor ux:Name="menuBackground" Opacity="0.97" Color="#F9F9F9"/>
-                
-            </Panel>
-            <Rectangle Width="100%" Color="#000" Layer="Overlay"  Opacity="0.05" Height="1"  Alignment="Bottom" />
+    <DockPanel ux:Name="WebViewPanel" Y="100%" Layer="Overlay" >
+        <Panel Height="60" Background="Black" Alignment="Top" >
+          <Panel Alignment="CenterRight" Height="40" Width="40" HitTestMode="LocalBounds" Margin="0,20,0,0" >
+            <Text Value="X" Alignment="Center" FontSize="20" TextColor="White" />
+            <Clicked>
+              <Toggle Target="WebViewInView" />
+            </Clicked>
+          </Panel>
         </Panel>
-        
+        <NativeViewHost Margin="0,60,0,0" >
+            <WebView Dock="Top" Height="100%" Width="100%" Url="http://lettoslo.no/min-konto/?adduser">
+                <PageLoaded>
+                    <EvaluateJS Handler="{onPageLoaded}">
+                        var result = {
+                            url : document.location.href
+                        };
+                        return result;
+                    </EvaluateJS>
+                </PageLoaded>
+            </WebView>
+        </NativeViewHost>
+    </DockPanel>
 
-    <NativeViewHost ux:Name="mapy" Alignment="Top" Height="100%" Visibility="Visible" Margin="0,65,0,120" Width="100%" RenderToTexture="false" >
-        <LettMap Height="100%" ShowMyLocationButton="true" AllowZoom="false" ShowMyLocation="true" Latitude="59.910617" Longitude="10.728045" Zoom="13" MarkerTapped="{updateInfo}">
-            <Each Items="{contactInfo}">
-                <MapMarker  Latitude="{latitude}" Longitude="{longitude}" Label="{label}" IconFile="Assets/pin.png" IconAnchorY="-5" />
-            </Each>
-        </LettMap>
-    </NativeViewHost>
-
-    <Panel ux:Name="infoText" Alignment="Bottom" Padding="10,10,0,10" Height="120" >
-        <Text Value="{label}" TextWrapping="Wrap" Font="Thin" Alignment="VerticalCenter" FontSize="22"/>
-    </Panel>
+    <Rectangle Height="100" Width="100" Color="Black" >
+        <Clicked>
+          <Toggle Target="WebViewInView" />
+        </Clicked>
+    </Rectangle>
 
 
 </App>
